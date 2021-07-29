@@ -348,7 +348,8 @@ The following functions are added for SV calling to the original mapping pipelin
 
 The above mentioned tools (paths to tools) have been hardcoded and need to be changed as per your local installations. The SVE engine specifcially requires samtools v0.1.19 to process some of the stages of SV calling and needs to be exported before running the pipeline as shown below:
 
-```export SINGULARITYENV_PREPEND_PATH=/appl/soft/bio/samtools/gcc_9.1.0/0.1.19
+```
+export SINGULARITYENV_PREPEND_PATH=/appl/soft/bio/samtools/gcc_9.1.0/0.1.19
 python dogmap/process-illumina-filesv.py \
 -t 24 \
 --table VILLPT49.runs.table.txt
@@ -356,8 +357,8 @@ python dogmap/process-illumina-filesv.py \
 --refBWA bwa-mem2index/UU_Cfam_GSD_1.0_ROSY.fa \
 --tmpdir /tmpssd/CH027tmp \
 --finaldir genome-processing/aligned \
---knownsites UU_Cfam_GSD_1.0.BQSR.DB.bed.gz```
-
+--knownsites UU_Cfam_GSD_1.0.BQSR.DB.bed.gz
+```
 Running this pipeline should take >2-3 hrs more than the original mapping pipeline producing VCF files from the 6 SV callers.
 
 
