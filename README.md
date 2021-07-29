@@ -331,7 +331,7 @@ several changes:
 ## Changes for SV calling
 **29 July 2021**
 
-Added SV calling from 6 callers (Breakdance,CNVnator,Lumpy,Hydra from https://github.com/timothyjamesbecker/SVE) and DELLY2, MANTA to the scripts dogmapsv.py and process-illumina-filesv.py.  And BAM to CRAM conversion step has been moved to this stage.
+Added SV calling from 6 callers (Breakdance,CNVnator,Lumpy,Hydra from https://github.com/timothyjamesbecker/SVE) and DELLY2, MANTA to the scripts `dogmapsv.py` and `process-illumina-filesv.py`.  And BAM to CRAM conversion step has been moved to this stage.
 
 **Installation Requirements:**
 1. The SV callers Breakdance,CNVnator,Lumpy,Hydra are executed using singularity version (docker equivalent for non-root user of computing cluster). To build the singularity image execute the following command:
