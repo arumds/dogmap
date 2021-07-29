@@ -361,5 +361,5 @@ python dogmap/process-illumina-filesv.py \
 ```
 Running this pipeline should take >2-3 hrs more than the original mapping pipeline producing VCF files from the 6 SV callers.
 
-
+To run SV calling after completion of the mapping pipeline, the series of commands to be run on CRAM file are given in `svcallers.sh` to run in parallel.
 
