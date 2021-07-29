@@ -333,7 +333,7 @@ several changes:
 
 Added SV calling from 6 callers (Breakdance,CNVnator,Lumpy,Hydra from https://github.com/timothyjamesbecker/SVE) and DELLY2, MANTA to the scripts dogmapsv.py and process-illumina-filesv.py.  And BAM to CRAM conversion step has been moved to this stage.
 
-**Installation Requirements: 
+**Installation Requirements:**
 1. The SV callers Breakdance,CNVnator,Lumpy,Hydra are executed using singularity version (docker equivalent for non-root user of computing cluster). To build the singularity image execute the following command:
 `singularity build tjbsve.sif docker:timothyjamesbecker/sve`
 2. Delly (Version: 0.8.7)
@@ -341,19 +341,14 @@ Added SV calling from 6 callers (Breakdance,CNVnator,Lumpy,Hydra from https://gi
 
 The following functions are added for SV calling to the original mapping pipeline:
 
-dogmap.run_subsetbam(myData). ## subset bam on chr1-38,X,Y,M and unplaced Y contigs for SV calling
+* dogmap.run_subsetbam(myData). ## subset bam on chr1-38,X,Y,M and unplaced Y contigs for SV calling
+* dogmap.run_indexbam(myData)
+* dogmap.run_configmanta(myData)  ###requires /path/to/manta-1.6.0/bin/configManta.py and /path/to/manta.bed.gz
+* dogmap.run_svcaller(myData) ### requires path to tjbsve.sif, delly and `--bind /appl/soft:/appl/soft` argument to singularity command to export samtools v0.1.19.
 
-dogmap.run_indexbam(myData)
-
-dogmap.run_configmanta(myData)  ###requires /path/to/manta-1.6.0/bin/configManta.py and /path/to/manta.bed.gz
-
-dogmap.run_svcaller(myData) ### requires path to tjbsve.sif, delly and `--bind /appl/soft:/appl/soft` argument to singularity command to export samtools v0.1.19.
-
-The above mentioned tools (paths to tools) have been hardcoded and need to be changed as per your local installations.
-The SVE engine specifcially requires samtools v0.1.19 to process some of the stages of SV calling and needs to be exported before running the pipeline as shown below:
+The above mentioned tools (paths to tools) have been hardcoded and need to be changed as per your local installations. The SVE engine specifcially requires samtools v0.1.19 to process some of the stages of SV calling and needs to be exported before running the pipeline as shown below:
 
 `export SINGULARITYENV_PREPEND_PATH=/appl/soft/bio/samtools/gcc_9.1.0/0.1.19`
-
 `python dogmap/process-illumina-filesv.py \
 -t 24 \
 --table VILLPT49.runs.table.txt
