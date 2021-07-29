@@ -910,11 +910,11 @@ def run_configmanta(myData,run=True):
     myData['SVDir'] += '/'
     outMantaDir = myData['SVDir']
 
-    cmd = '/scratch/lohi2/Tools/manta-1.6.0/bin/configManta.py'
+    cmd = '/path/to/manta-1.6.0/bin/configManta.py'
     cmd += ' --bam %s ' % myData['subsetBam']
     cmd += ' --referenceFasta %s ' % myData['ref']
     cmd += ' --runDir %s ' % outMantaDir
-    cmd += '--callRegions /scratch/lohi2/Tools/manta.bed.gz'
+    cmd += '--callRegions /path/to/manta.bed.gz'
 
     if run is True:
         print(cmd,flush=True)
@@ -951,7 +951,7 @@ def run_svcaller(myData, run=True):
     for caller in svcallers:
         outSVDir = myData['finalDir'] + '/'
 
-        cmd = 'singularity_wrapper exec --bind /appl/soft:/appl/soft /scratch/lohi2/Tools/tjbsve.sif /software/SVE/scripts/variant_processor.py -v -L 151 -D 25'
+        cmd = 'singularity_wrapper exec --bind /appl/soft:/appl/soft /path/to/tjbsve.sif /software/SVE/scripts/variant_processor.py -v -L 151 -D 25'
         cmd += ' -b %s ' % myData['subsetBam']
         cmd += ' -r %s' % myData['ref']
         cmd += ' -o %s ' % outSVDir
@@ -960,7 +960,7 @@ def run_svcaller(myData, run=True):
         outFile.write(cmd)
 
     outDellyName = myData['finalDir'] + myData['sampleName'] + '_S11.bcf'
-    cmd = '/scratch/lohi2/Tools/delly/src/delly call -t ALL '
+    cmd = '/path/to/delly/src/delly call -t ALL '
     cmd += ' -g %s ' % myData['ref'] 
     cmd += ' -o %s ' % outDellyName
     cmd +=  ' %s '  % myData['subsetBam']
