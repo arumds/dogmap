@@ -139,7 +139,7 @@ def setup_sample_table(myData):
     k = list(sampleName.keys())
     myData['sampleName'] = k[0]
 ############################################################################# 
-def check_dir_space(myData):
+def check_dir_space(myData,checkSize = True):
     myData['logFile'].write('\nchecking file systems\n')
     
     # check tmp dir
@@ -179,29 +179,38 @@ def check_dir_space(myData):
     freeSpace = stats.f_frsize * stats.f_bavail 
     freeSpaceGb = freeSpace / (1024**3)
     if freeSpaceGb < 200.0:
-        s = 'less than 200 Gb free in tmpDir! %f\n Closing!' % freeSpaceGb
+        s = 'less than 200 Gb free in tmpDir! %f\n' % freeSpaceGb
         print(s,flush=True)
         myData['logFile'].write(s + '\n')
         myData['logFile'].flush()
-        myData['logFile'].close()
-        sys.exit()
+        if checkSize is True:  # kill job
+            s = 'ERROR!! less than 200 Gb free in tmpDir! %f\n Exiting Script!' % freeSpaceGb
+            print(s,flush=True)
+            myData['logFile'].write(s + '\n')
+            myData['logFile'].flush()
+            myData['logFile'].close()
+            sys.exit()
     else:
         s = 'more than 200 Gb free in tmpDir! %f\n Ok!' % freeSpaceGb
         print(s,flush=True)
         myData['logFile'].write(s + '\n')
         myData['logFile'].flush()
         
-
     stats =  os.statvfs(myData['finalDir'])
     freeSpace = stats.f_frsize * stats.f_bavail 
     freeSpaceGb = freeSpace / (1024**3)
     if freeSpaceGb < 50.0:
-        s = 'less than 50 Gb free in final dir! %f\n Closing!' % freeSpaceGb
+        s = 'less than 50 Gb free in final dir! %f\n!' % freeSpaceGb
         print(s,flush=True)
         myData['logFile'].write(s + '\n')
         myData['logFile'].flush()
-        myData['logFile'].close()
-        sys.exit()
+        if checkSize is True:  # kill job
+            s = 'ERROR less than 50 Gb free in final dir! %f\n! Exiting!' % freeSpaceGb
+            print(s,flush=True)
+            myData['logFile'].write(s + '\n')
+            myData['logFile'].flush()
+            myData['logFile'].close()
+            sys.exit()
     else:
         s = 'more than 50 Gb free in final dir! %f\n Ok!' % freeSpaceGb
         print(s,flush=True)
@@ -284,7 +293,8 @@ def run_bwa_mem2_table(myData,run=True):
         myData['logFile'].write(s + '\n')    
         t = time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime())        
         myData['logFile'].write(t + '\n')        
-        myData['logFile'].flush()              
+        myData['logFile'].flush()
+        return              
         
     # ok, now here to do the runs
     # table is sampleName LibraryName ReadGroupID fastq1 fastq2
@@ -391,7 +401,7 @@ def run_mdspark(myData,run=True):
         myData['logFile'].flush()        
         runCMD(cmd)        
     else:
-        s = 'skipping run_bwa_mem2'
+        s = 'skipping run_mdspark'
         print(s,flush=True)
         myData['logFile'].write(s + '\n')    
     
@@ -837,7 +847,7 @@ def remove_tmp_dir(myData,run=True):
     myData['logFile'].write(t + '\n')
     myData['logFile'].flush()
     
-    check_dir_space(myData)
+    check_dir_space(myData,checkSize = False)
     
     if run is True:
         shutil.rmtree(myData['tmpDir']) 
