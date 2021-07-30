@@ -362,7 +362,7 @@ python dogmap/process-illumina-filesv.py \
 Running this pipeline should take ~8hrs producing VCF files from the 6 SV callers and SNP gVCF by utlizing local scratch as tmp, which is 1.5-2hrs more than the original mapping pipeline.
 
 ```
-Output files:
+SV Output files:
 ${sample}.subset_S4.vcf
 ${sample}.subset_S10.vcf    
 ${sample}_S11.bcf
