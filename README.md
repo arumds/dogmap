@@ -364,7 +364,7 @@ python dogmap/process-illumina-filesv.py \
 --finaldir genome-processing/aligned \
 --knownsites UU_Cfam_GSD_1.0.BQSR.DB.bed.gz
 ```
-Running this pipeline should take ~8hrs producing VCF files from the 6 SV callers and SNP gVCF by utlizing local scratch as tmp, which is 1.5-2hrs more than the original mapping pipeline.
+Running this pipeline should take ~8hrs producing VCF files from the 6 SV callers and SNP gVCF by utlizing tmpSSD as tmp.
 
 ```
 SV Output files:
@@ -376,5 +376,5 @@ ${sample}.subset_S18.vcf
 results/variants/diploidSV.vcf.gz
 ```
 
-To run SV calling after completion of the mapping pipeline, the series of commands to be run on CRAM file are given in `svcallers.sh` to run in parallel.
+To run SV calling after completion of the original mapping pipeline, the series of commands to be run on CRAM file are given in `svcallers.sh` to run in parallel.
 
